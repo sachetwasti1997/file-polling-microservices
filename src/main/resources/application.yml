@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: file-polling-microservice
+camel:
+  springboot:
+    main-run-controller: true

@@ -1,6 +1,8 @@
 package com.camel.file_polling_microservice.components;
 
 import com.camel.file_polling_microservice.dto.NameAddress;
+import com.camel.file_polling_microservice.processor.InboundMessageProcessor;
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.dataformat.beanio.BeanIODataFormat;
 import org.slf4j.Logger;
@@ -28,11 +30,8 @@ public class LegacyFileRoute extends RouteBuilder {
                 .split(body().tokenize("\n", 1, true))
                 .unmarshal(beanIODataFormat)
                 // this is used to execute java code in camel DSL
-                .process(exchange -> {
-                    NameAddress fileData = exchange.getIn().getBody(NameAddress.class);
-                    LOGGER.info("The file data read is "+fileData);
-//                    exchange.getIn().setBody(fileData.toString());
-                })
+                .process(new InboundMessageProcessor())
+                .log(LoggingLevel.INFO, "Transformed Object: ${body}")
                 .convertBodyTo(String.class)
                 .to("file:src/data/output?fileName=outputFile.csv&fileExist=append&appendChars=\\n") //<routeType>:{location}<optional>?{parameters}=<value>
                 .end(); //this is used to mark that the split has ended here

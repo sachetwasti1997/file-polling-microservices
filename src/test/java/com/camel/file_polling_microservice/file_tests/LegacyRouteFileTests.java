@@ -28,7 +28,7 @@ public class LegacyRouteFileTests {
     @Test
     public void testFileMoveByMockingFromEndpoint() throws Exception {
         // setup the mock
-        String expectedBody = "This is the mock data after mocking the from endpoint";
+        String expectedBody = "OutBoundNameAddress(name=SACHET WASTI, address=Phone: 7679325590, HYDERABAD, PIN: 560037, INDIA)";
         mockEndpoint.expectedBodiesReceived(expectedBody);
         mockEndpoint.expectedMinimumMessageCount(1);
 
@@ -42,7 +42,9 @@ public class LegacyRouteFileTests {
 
         // start the context and validate if the mock is working
         context.start();
-        producerTemplate.sendBody("direct:mock-start", "This is the mock data after mocking the from endpoint");
+        producerTemplate.sendBody("direct:mock-start",
+                "name,phone_no,city,postal_code,country\n" +
+                        "SACHET WASTI,7679325590,HYDERABAD,560037,INDIA");
         mockEndpoint.assertIsSatisfied();
     }
 

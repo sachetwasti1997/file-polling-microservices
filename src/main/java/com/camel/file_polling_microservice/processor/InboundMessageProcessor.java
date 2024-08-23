@@ -7,13 +7,15 @@ import org.apache.camel.Processor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map;
+
 public class InboundMessageProcessor implements Processor {
     private static final Logger LOGGER = LoggerFactory.getLogger(InboundMessageProcessor.class);
     @Override
     public void process(Exchange exchange) throws Exception {
         NameAddress fileData = exchange.getIn().getBody(NameAddress.class);
-        LOGGER.info("The file data read is "+fileData);
         exchange.getIn().setBody(new OutBoundNameAddress(fileData.getName(), readOutBoundAddress(fileData)));
+        exchange.getIn().setHeaders(Map.of("consumedId", fileData.getId()));
     }
 
     private String readOutBoundAddress(NameAddress nameAddress) {

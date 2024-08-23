@@ -1,6 +1,15 @@
 spring:
   application:
     name: file-polling-microservice
+  datasource:
+    url: jdbc:mysql://localhost:3306/user
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
 camel:
   springboot:
     main-run-controller: true

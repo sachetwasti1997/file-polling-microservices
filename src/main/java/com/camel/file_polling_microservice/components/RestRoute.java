@@ -15,7 +15,7 @@ public class RestRoute extends RouteBuilder {
 
         restConfiguration()
                 .component("jetty")
-                .host("localhost")
+                .host("0.0.0.0")
                 .port(8080)
                 .bindingMode(RestBindingMode.json)
                 .enableCORS(true);
@@ -32,7 +32,9 @@ public class RestRoute extends RouteBuilder {
 //                .log(LoggingLevel.INFO, "Transformed body: ${body}")
 //                .convertBodyTo(String.class)
 //                .to("file:src/data/output?fileName=outputFile.csv&fileExist=append&appendChars=\\n");
-                .to("jpa:"+NameAddress.class.getName());
+                .to("jpa:"+NameAddress.class.getName())
+                .convertBodyTo(String.class)
+                .to("kafka:camel-topic");
 
     }
 }

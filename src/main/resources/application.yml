@@ -2,7 +2,7 @@ spring:
   application:
     name: file-polling-microservice
   datasource:
-    url: jdbc:mysql://localhost:3306/user
+    url: jdbc:mysql://camel-mysql-srv:3306/user
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -13,3 +13,9 @@ spring:
 camel:
   springboot:
     main-run-controller: true
+  component:
+    kafka:
+      brokers: 'kafka-2.kafka.default.svc.cluster.local:29092,kafka-1.kafka.default.svc.cluster.local:29092,kafka-0.kafka.default.svc.cluster.local:29092'
+
+server:
+  port: 8080

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: file-polling-microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: file-polling-microservice
+  template:
+    metadata:
+      labels:
+        app: file-polling-microservice
+    spec:
+      containers:
+        - name: file-polling-microservice
+          image: sachetwasti61/file-polling-microservice
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: "2"
+              memory: "2Gi"
+            requests:
+              cpu: "5"
+              memory: "1Gi"
+          ports:
+            - containerPort: 8080
+#          env:
+#            - name: CONFIG_SERVER_URL
+#              valueFrom:
+#                configMapKeyRef:
+#                  key: config_server_access
+#                  name: config-server-url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: file-polling-microservice-srv
+spec:
+  selector:
+    app: file-polling-microservice
+  ports:
+    - port: 8080
+      targetPort: 8080

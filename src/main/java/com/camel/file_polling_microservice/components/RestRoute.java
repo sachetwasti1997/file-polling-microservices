@@ -28,10 +28,6 @@ public class RestRoute extends RouteBuilder {
 
         from("direct:endpoint")
                 .log(LoggingLevel.INFO, "${body}")
-//                .process(new InboundMessageProcessor())
-//                .log(LoggingLevel.INFO, "Transformed body: ${body}")
-//                .convertBodyTo(String.class)
-//                .to("file:src/data/output?fileName=outputFile.csv&fileExist=append&appendChars=\\n");
                 .to("jpa:"+NameAddress.class.getName())
                 .convertBodyTo(String.class)
                 .to("kafka:camel-topic");

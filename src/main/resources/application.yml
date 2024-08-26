@@ -13,6 +13,7 @@ spring:
 camel:
   springboot:
     main-run-controller: true
+    tracing: true
   component:
     kafka:
       brokers: 'kafka-2.kafka.default.svc.cluster.local:29092,kafka-1.kafka.default.svc.cluster.local:29092,kafka-0.kafka.default.svc.cluster.local:29092'

@@ -28,7 +28,14 @@ public class RestRoute extends RouteBuilder {
 
         from("direct:endpoint")
                 .log(LoggingLevel.INFO, "${body}")
-                .to("jpa:"+NameAddress.class.getName())
+                        .to("direct:toDB")
+                        .to("direct:toKafka");
+
+        from("direct:toDB")
+                .routeId("save-to-db")
+                .to("jpa:"+NameAddress.class.getName());
+
+        from("direct:toKafka")
                 .convertBodyTo(String.class)
                 .to("kafka:camel-topic");
 

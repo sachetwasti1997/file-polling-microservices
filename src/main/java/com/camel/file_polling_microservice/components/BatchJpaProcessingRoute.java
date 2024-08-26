@@ -20,6 +20,7 @@ public class BatchJpaProcessingRoute extends RouteBuilder {
     public void configure() throws Exception {
         from("timer:readDB?period=10000")
                 .routeId("read-db-id")
+                .autoStartup(false)
                 .to("jpa:"+ NameAddress.class.getName()+"?namedQuery=fetchAllRows")
                 .split(body())
                 .process(new InboundMessageProcessor())
@@ -29,5 +30,10 @@ public class BatchJpaProcessingRoute extends RouteBuilder {
                 .toD("jpa:"+NameAddress.class.getName()
                         +"?nativeQuery=DELETE FROM name_address WHERE id=${header.consumedId}&useExecuteUpdate=true")
                 .end();
+
+        from("timer:startBatchRoute?repeatCount=1")
+                .routeId("start-read-db-id")
+                .to("controlbus:route?routeId=read-db-id&action=start");
+
     }
 }

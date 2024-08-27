@@ -25,12 +25,12 @@ spec:
               memory: "1Gi"
           ports:
             - containerPort: 8080
-#          env:
-#            - name: CONFIG_SERVER_URL
-#              valueFrom:
-#                configMapKeyRef:
-#                  key: config_server_access
-#                  name: config-server-url
+          env:
+            - name: CONFIG_SERVER_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: config_server_url
+                  name: config-server-url
 ---
 apiVersion: v1
 kind: Service

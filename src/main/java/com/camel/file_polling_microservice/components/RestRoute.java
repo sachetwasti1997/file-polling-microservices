@@ -21,8 +21,6 @@ public class RestRoute extends RouteBuilder {
 
         restConfiguration()
                 .component("jetty")
-                .host("0.0.0.0")
-                .port(8080)
                 .bindingMode(RestBindingMode.json)
                 .enableCORS(true);
 

@@ -1,7 +1,7 @@
 package com.camel.file_polling_microservice.components;
 
 import com.camel.file_polling_microservice.dto.NameAddress;
-import com.camel.file_polling_microservice.kafka.KafkaAdminClient;
+import com.camel.file_polling_microservice.kafka.admin.KafkaAdminClient;
 import com.camel.file_polling_microservice.processor.InboundMessageProcessor;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
